@@ -1,10 +1,9 @@
-<<<<<<< HEAD
-# SkySense
 
+# Nimbus
 A modern, responsive weather forecast web app built with vanilla JavaScript, HTML, and CSS. Get current weather and a 5-day forecast for any city, with support for geolocation, search history, and light/dark themes.
 
-![App Screenshot in dark mode](./assets/SkySense-dark-mode.png)
-![App Screenshot in light mode](./assets/SkySense-light-mode.png)
+![App Screenshot in dark mode](./assets/Nimbus-dark-mode.png)
+![App Screenshot in light mode](./assets/Nimbus-light-mode.png)
 
 ## Features
 
