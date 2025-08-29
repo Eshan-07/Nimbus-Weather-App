@@ -1,7 +1,7 @@
 import OPEN_WEATHER_API_KEY from "./apiKey.js";
 
 // DOM Elements
-const cityInput = document.getElementById("city");
+const cityInput = document.getElementById("city-input");
 const searchBtn = document.getElementById("search-btn");
 const locationBtn = document.getElementById("location-btn");
 const cityName = document.getElementById("city-name");
@@ -23,14 +23,11 @@ const weatherApp = document.getElementById("weather-app");
 const themeToggle = document.getElementById("theme-toggle");
 const historyItems = document.getElementById("history-items");
 
-// App Branding - Set title dynamically
-document.title = "Nimbus | Weather Forecast";
-const appTitle = document.querySelector(".app-title h1");
-if (appTitle) appTitle.textContent = "Nimbus";
-
 // App State
 let state = {
-  weatherHistory: JSON.parse(localStorage.getItem("weatherHistory")) || [],
+  weatherHistory: (JSON.parse(localStorage.getItem("weatherHistory")) || []).filter(
+    (item) => typeof item === "string" && item !== null
+  ),
   isDarkMode: localStorage.getItem("weatherDarkMode") === "true",
 };
 
@@ -54,7 +51,7 @@ async function getWeatherByLocation() {
         const lon = position.coords.longitude;
 
         try {
-          // Get city name from coordinates
+          // ✅ Reverse geocoding to get city from lat/lon
           const response = await fetch(
             `https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lon}&limit=1&appid=${OPEN_WEATHER_API_KEY}`
           );
@@ -139,17 +136,27 @@ async function getWeather(city) {
 
 // Add city to search history
 function addToSearchHistory(city) {
+  if (!city || typeof city !== "string") {
+    return; // 🚫 do nothing if city is invalid
+  }
+
+  // Remove city if it already exists in history
   state.weatherHistory = state.weatherHistory.filter(
-    (item) => item.toLowerCase() !== city.toLowerCase()
+    (item) => typeof item === "string" && item.toLowerCase() !== city.toLowerCase()
   );
 
+  // Add city to the beginning of the history array
   state.weatherHistory.unshift(city);
 
+  // Limit history to 5 items
   if (state.weatherHistory.length > 5) {
     state.weatherHistory.pop();
   }
 
+  // Save to localStorage
   localStorage.setItem("weatherHistory", JSON.stringify(state.weatherHistory));
+
+  // Update UI
   updateSearchHistory();
 }
 
@@ -173,6 +180,7 @@ function updateSearchHistory() {
 
 // Process and display the weather data
 function displayWeather(currentData, forecastData) {
+  // Display current weather
   cityName.textContent = `${currentData.name}, ${currentData.sys.country}`;
   currentDate.textContent = formatDate(currentData.dt);
   weatherIconMain.innerHTML = getWeatherIcon(currentData.weather[0].id);
@@ -184,6 +192,7 @@ function displayWeather(currentData, forecastData) {
   pressure.textContent = `${currentData.main.pressure} hPa`;
   visibility.textContent = `${(currentData.visibility / 1000).toFixed(1)} km`;
 
+  // Apply weather theme
   const themeClass = getWeatherTheme(currentData.weather[0].id);
   const currentWeatherElement = document.querySelector(".current-weather");
   currentWeatherElement.className = "current-weather";
@@ -192,10 +201,14 @@ function displayWeather(currentData, forecastData) {
     currentWeatherElement.classList.add(themeClass);
   }
 
+  // Display 5-day forecast
   displayForecast(forecastData);
+
+  // Show the weather data section
   showWeatherData();
 }
 
+// Show weather data
 function showWeatherData() {
   loading.style.display = "none";
   errorContainer.style.display = "none";
@@ -206,7 +219,9 @@ function showWeatherData() {
 function displayForecast(forecastData) {
   forecastItems.innerHTML = "";
 
+  // Process forecast data (one forecast per day)
   const dailyForecasts = {};
+
   forecastData.list.forEach((forecast) => {
     const date = new Date(forecast.dt * 1000);
     const day = date.toDateString();
@@ -216,6 +231,7 @@ function displayForecast(forecastData) {
     }
   });
 
+  // Display up to 5 forecasts
   Object.values(dailyForecasts).forEach((forecast) => {
     const forecastItem = document.createElement("div");
     forecastItem.className = "forecast-item";
@@ -240,11 +256,13 @@ function displayForecast(forecastData) {
   });
 }
 
+// Format day
 function formatDay(timestamp) {
   const date = new Date(timestamp * 1000);
   return date.toLocaleDateString("en-US", { weekday: "short" });
 }
 
+// Get weather theme class based on weather condition
 function getWeatherTheme(weatherId) {
   if (weatherId >= 200 && weatherId < 300) {
     return "weather-theme-thunderstorm";
@@ -257,38 +275,44 @@ function getWeatherTheme(weatherId) {
   } else if (weatherId > 800) {
     return "weather-theme-clouds";
   }
+
   return "";
 }
 
+// Get weather icon class based on weather condition
 function getWeatherIcon(weatherId) {
   if (weatherId >= 200 && weatherId < 300) {
-    return '<i class="fas fa-bolt"></i>';
+    return '<i class="fas fa-bolt"></i>'; // Thunderstorm
   } else if (weatherId >= 300 && weatherId < 400) {
-    return '<i class="fas fa-cloud-rain"></i>';
+    return '<i class="fas fa-cloud-rain"></i>'; // Drizzle
   } else if (weatherId >= 500 && weatherId < 600) {
-    return '<i class="fas fa-cloud-showers-heavy"></i>';
+    return '<i class="fas fa-cloud-showers-heavy"></i>'; // Rain
   } else if (weatherId >= 600 && weatherId < 700) {
-    return '<i class="fas fa-snowflake"></i>';
+    return '<i class="fas fa-snowflake"></i>'; // Snow
   } else if (weatherId >= 700 && weatherId < 800) {
-    return '<i class="fas fa-smog"></i>';
+    return '<i class="fas fa-smog"></i>'; // Atmosphere
   } else if (weatherId === 800) {
-    return '<i class="fas fa-sun"></i>';
+    return '<i class="fas fa-sun"></i>'; // Clear
   } else {
-    return '<i class="fas fa-cloud"></i>';
+    return '<i class="fas fa-cloud"></i>'; // Clouds
   }
 }
 
+// Format date
 function formatDate(timestamp) {
   const date = new Date(timestamp * 1000);
+
   const options = {
     weekday: "long",
     year: "numeric",
     month: "long",
     day: "numeric",
   };
+
   return date.toLocaleDateString("en-US", options);
 }
 
+// Get current weather data
 async function getCurrentWeather(city) {
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${OPEN_WEATHER_API_KEY}&units=metric`;
 
@@ -306,6 +330,7 @@ async function getCurrentWeather(city) {
   }
 }
 
+// Get 5-day forecast data
 async function getForecast(lat, lon) {
   const url = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${OPEN_WEATHER_API_KEY}&units=metric`;
 
@@ -319,12 +344,14 @@ async function getForecast(lat, lon) {
   }
 }
 
+// Show loading indicator
 function showLoading() {
   loading.style.display = "flex";
   errorContainer.style.display = "none";
   weatherData.style.display = "none";
 }
 
+// Show error message
 function showError(message) {
   loading.style.display = "none";
   errorContainer.style.display = "flex";
