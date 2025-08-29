@@ -1,5 +1,6 @@
 
-# Nimbus
+## 🌩️Nimbus
+
 A modern, responsive weather forecast web app built with vanilla JavaScript, HTML, and CSS. Get current weather and a 5-day forecast for any city, with support for geolocation, search history, and light/dark themes.
 
 ![App Screenshot in dark mode](./assets/Nimbus-dark-mode.png)
@@ -13,6 +14,14 @@ A modern, responsive weather forecast web app built with vanilla JavaScript, HTM
 - **Search History:** Quickly access recent city searches.
 - **Theme Toggle:** Switch between light and dark modes.
 - **Responsive Design:** Works great on desktop and mobile.
+
+## Future Enhancements
+
+- **Hourly Forecast:** Show weather by the hour.  
+- **Unit Conversion:** Switch between °C and °F.  
+- **Weather Alerts:** Notify users of severe conditions.  
+- **Offline Mode:** Access recent data without internet.  
+- **Favorites:** Save and quickly access preferred cities.  
 
 ## Demo
 
@@ -61,68 +70,14 @@ weather-app/
 
 - [OpenWeatherMap API Docs](https://openweathermap.org/api)
 
+
+
 ## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
----
+
 
 Created with ❤️ by [Mohammed Eshan Jinabade](https://github.com/Eshan-07)
-=======
-Nimbus Weather App
-
-A sleek and responsive weather forecasting web application built with HTML, CSS, and JavaScript.
-It provides real-time weather updates, dark mode toggle, and persistent search history using localStorage.
-
-🚀 Features
-
-🌍 Search by city – Get live weather data from the OpenWeather API
-
-🌙 Dark/Light mode – Switch themes with one click
-
-📜 Search history – Stores your recent searches in localStorage
-
-📱 Responsive design – Works across desktop and mobile
-
-🛠️ Tech Stack
-
-Frontend: HTML, CSS, JavaScript
-
-API: OpenWeather API
-
-Storage: LocalStorage for search history & theme persistence
-
-📷 Screenshots
-
-(Add your app screenshots here – e.g., assets/screenshot.png)
-
-⚡ Getting Started
-1. Clone the repo
-git clone https://github.com/Eshan-07/Nimbus-Weather-App.git
-cd Nimbus-Weather-App
-
-2. Open in browser
-
-Simply open index.html in your browser.
-
-🔑 API Key Setup
-
-This app uses the OpenWeather API.
-
-Create a free account at OpenWeather
-
-Generate an API key
-
-Add your API key inside script.js
-
-const OPEN_WEATHER_API_KEY = "YOUR_API_KEY_HERE";
-
-📌 Future Enhancements
-
-🌡️ Hourly & weekly forecasts
-
-🗺️ Weather by current location (Geolocation API)
-
-🔔 Custom alerts for extreme weather
 
 
