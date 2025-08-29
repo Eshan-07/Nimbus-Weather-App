@@ -16,7 +16,7 @@ A modern, responsive weather forecast web app built with vanilla JavaScript, HTM
 
 ## Demo
 
-[Live Demo](https://algozenith-weather.netlify.app/)
+[Live Demo](https://nimbus-weather1.netlify.app/)
 
 ## Getting Started
 
@@ -29,8 +29,8 @@ A modern, responsive weather forecast web app built with vanilla JavaScript, HTM
 
 1. **Clone the repository:**
    ```sh
-   git clone https://github.com/aaqib605/az-weather-app.git
-   cd az-weather-app
+   git clone https://github.com/Eshan-07/Nimbus-Weather-App.git
+   cd weather-app
    ```
 2. **Add your API key:**
 
@@ -50,7 +50,7 @@ A modern, responsive weather forecast web app built with vanilla JavaScript, HTM
 ## Project Structure
 
 ```
-az-weather-app/
+weather-app/
 ├── index.html        # Main HTML file
 ├── script.js         # JavaScript logic
 ├── styles.css        # App styling
@@ -67,7 +67,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ---
 
-Created with ❤️ by [Aaqib Javaid](https://github.com/aaqib605)
+Created with ❤️ by [Mohammed Eshan Jinabade](https://github.com/Eshan-07)
 =======
 Nimbus Weather App
 
@@ -98,7 +98,7 @@ Storage: LocalStorage for search history & theme persistence
 
 ⚡ Getting Started
 1. Clone the repo
-git clone https://github.com/your-username/Nimbus-Weather-App.git
+git clone https://github.com/Eshan-07/Nimbus-Weather-App.git
 cd Nimbus-Weather-App
 
 2. Open in browser
@@ -125,7 +125,4 @@ const OPEN_WEATHER_API_KEY = "YOUR_API_KEY_HERE";
 
 🔔 Custom alerts for extreme weather
 
-👨‍💻 Author
 
-Your Name – GitHub Profile
->>>>>>> cf397d00965ac483fc3c5dee7df18668fbbe15b7
